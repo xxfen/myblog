@@ -1,6 +1,7 @@
 package com.xxfen.myblog.service;
 
 import com.xxfen.myblog.model.Article;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,4 +34,11 @@ public interface ArticleService {
      */
     Article getArticleByArticleId(long articleId);
 
-}
+
+    /**
+     * 按分类并分页获得所有文章
+     * @param rows 一页显示文章数
+     * @param pageNo 第几页
+     * @return 该页所有文章
+     */
+    JSONArray findAllArticles(String rows, String pageNo,String categories);}

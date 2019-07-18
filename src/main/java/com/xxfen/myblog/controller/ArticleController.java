@@ -3,6 +3,7 @@ package com.xxfen.myblog.controller;
 import com.xxfen.myblog.model.Article;
 import com.xxfen.myblog.service.ArticleService;
 import com.xxfen.myblog.util.FileUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +35,45 @@ public class ArticleController {
 
     @PostMapping("/publishArticle")
     @ResponseBody
-    public JSONObject selectUser(@PathVariable Article article) {
+//    public JSONObject publishArticle(Article article) {
+    public String publishArticle(@RequestBody Article article) {
 
         JSONObject returnJson = new JSONObject();
-      return   returnJson = articleService.insertArticle(article);
+        logger.info(article.toString() + "-0001");
+        String str = "{\n" +
+                "\t\"articleTitle\": " + article.getArticleTitle() + ",\n" +
+                "\t\"articleContent\":  " + article.getArticleContent() +
+                ",\n" +
+                "\t\"articleTags\": " + article.getArticleTags() +
+                ",\n" +
+                "\t\"articleCategories\": " + article.getArticleCategories() +
+                ",\n" +
+                "\t\"imgPath\": " + article.getImgPath() +
+                "\n" +
+                "}";
+
+        return str;
+        //return article.toString();
+        // return   returnJson = articleService.insertArticle(article);
 
     }
+
+
+    /**
+     * 分页获得当前页文章
+     *
+     * @param rows       一页的大小
+     * @param pageNum    当前页
+     * @param categories 类别
+     */
+    @PostMapping("/myArticles")
+     @ResponseBody
+    public   JSONArray myArticles(@RequestParam(value = "rows", required = false) String rows,
+                         @RequestParam(value = "pageNum", required = false) String pageNum,
+                         @RequestParam(value = "categories", required = false) String categories) {
+        logger.info(rows + "-" + pageNum + "-" + categories);
+        return articleService.findAllArticles(rows, pageNum, categories);
+
+    }
+
 }

@@ -23,7 +23,7 @@ public class MyblogApplication {
      * 查看用了什么数据库连接池
      */
     public void run(String... args) throws Exception {
-        System.out.println("DATASOURCE = " + dataSource+"-00011");
+        System.out.println("DATASOURCE = " + dataSource + "-00011");
     }
 
 }

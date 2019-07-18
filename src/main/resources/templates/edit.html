@@ -5,6 +5,7 @@
     <title>Simple example - Editor.md examples</title>
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/editormd.min.js"></script>
+    <script src="../static/js/article/publish.js"></script>
     <link rel="stylesheet" href="../static/css/style.css"/>
     <link rel="stylesheet" href="../static/css/editormd.css"/>
     <link rel="stylesheet" href="../static/css/all.css"/>
@@ -15,17 +16,21 @@
     <style>
         .header-img {
             border-radius: 50%;
+            width: 50px;
+            height: 50px;
         }
 
         .header-div-img {
             /*left: 60px;
             position: absolute;*/
-            margin-left: 30px;
+           /* margin-left: 30px;*/
+            margin-right: 15px;
             display: inline-block;
         }
 
         .header-div {
-            margin-left: 10px;
+            margin-left: 2px;
+
             display: inline-block;
         }
     </style>
@@ -35,16 +40,13 @@
     <div>
 
         <!--  <li class="header-div"><a class="headlink" href="skill.jsp">技术</a></li>-->
-        <div class="header-div-img">
-            <img class="header-img" src="../static/images/logo.jpg" width="42" height="42">
-        </div>
-        <div class="header-div">
-            <h2>啊徐呀</h2>
-        </div>
         <div id="writeArticle">
             <div class="zhy-editor">
                 <div class="zhy-editor-input">
-                    <input id="zhy-editor-title" type="text" placeholder="输入文章标题">
+                    <div class="header-div-img">
+                        <img class="header-img" src="../static/images/logo.jpg">
+                    </div>
+                    <input id="xxf-editor-title" type="text" placeholder="输入文章标题">
                     <button type="button" class="publishBtn" onclick="ShowDiv('my-alert','fade')">发布博客</button>
                 </div>
             </div>
@@ -59,11 +61,11 @@
                 </div>
             </div>
 
-            <div class="notice-box notice-box-title">
+            <div id="hint-title-no" class="notice-box notice-box-title">
                 <i class="am-icon-exclamation-circle"></i>
                 <span> 文章标题不能为空</span>
             </div>
-            <div class="notice-box notice-box-content">
+            <div id="hint-content-no" class="notice-box notice-box-content">
                 <i class="am-icon-exclamation-circle"></i>
                 <span> 文章內容不能为空</span>
             </div>
@@ -81,9 +83,11 @@
 <div class="white_content" tabindex="-1" id="my-alert">
     <div class="am-modal-dialog" style="border-radius: 5px;">
         <div style="text-align: left;margin:auto auto 5px 20px">发布博客
-           <!-- <a href="javascript: void(0)" class="am-close am-close-alt am-close-spin" data-am-modal-close
-               style="margin: 7px 10px auto auto" onclick="CloseDiv('my-alert','fade')">&times;</a>-->
-            <button style="float:right; font-size: 20px;color: #00c4ff;margin-right: 10px;border: none;background: none" onclick="CloseDiv('my-alert','fade')">×</button>
+            <!-- <a href="javascript: void(0)" class="am-close am-close-alt am-close-spin" data-am-modal-close
+                style="margin: 7px 10px auto auto" onclick="CloseDiv('my-alert','fade')">&times;</a>-->
+            <button style="float:right; font-size: 20px;color: #00c4ff;margin-right: 10px;border: none;background: none"
+                    onclick="CloseDiv('my-alert','fade')">×
+            </button>
 
         </div>
         <div class="am-modal-bd">
@@ -106,17 +110,17 @@
                     </div>
                 </div>
                 <div class="article-type row">
-                  <!--  <label class="publish-tag">文章类型<strong>:</strong></label>-->
-                  <!--  <div class="type">
-                        <select id="select-type">
-                            <option value="choose" selected>请选择</option>
-                            <option value="原创">原创</option>
-                            <option value="转载">转载</option>
-                        </select>
-                        <span class="required">*</span>
-                    </div>-->
+                    <!--  <label class="publish-tag">文章类型<strong>:</strong></label>-->
+                    <!--  <div class="type">
+                          <select id="select-type">
+                              <option value="choose" selected>请选择</option>
+                              <option value="原创">原创</option>
+                              <option value="转载">转载</option>
+                          </select>
+                          <span class="required">*</span>
+                      </div>-->
 
-                    <label class="publish-tag" >博客分类<strong>:</strong></label>
+                    <label class="publish-tag">博客分类<strong>:</strong></label>
                     <div class="categories">
                         <select id="select-categories">
                             <option value="choose">请选择</option>
@@ -131,7 +135,7 @@
                 <div class="articleUrlHide row">
                     <label class="publish-tag" style="display: inline-block">封面图片<strong>:</strong></label>
                     <div class="url" style="display: inline-block">
-                        <input type="text" id="articleUrl" placeholder=" 请输入图片链接地址">
+                        <input type="text" id="articleImgUrl" placeholder=" 请输入图片链接地址">
                         <span class="required">*</span>
                     </div>
                 </div>
@@ -141,12 +145,13 @@
             <button type="button" class="am-btn am-btn-default am-round" data-am-modal-close style="margin-right: 10px"
                     onclick="CloseDiv('my-alert','fade')">取消
             </button>
-            <button type="button" class="am-btn am-btn-default am-round " style="margin: 10px 15px 10px auto">
+            <button type="button" class="am-btn am-btn-default am-round " style="margin: 10px 15px 10px auto"
+                    onclick="publishArticle()">
                 发表博客
             </button>
         </div>
     </div>
-    <div class="notice-box notice-box-tags">
+    <div id="hint-tags-no" class="notice-box notice-box-tags">
         <i class="am-icon-exclamation-circle"></i>
         <span> 文章标签不能为空</span>
     </div>
@@ -154,7 +159,7 @@
         <i class="am-icon-exclamation-circle"></i>
         <span> 文章类型不能为空</span>
     </div>
-    <div class="notice-box notice-box-categories">
+    <div id="hint-categories-no" class="notice-box notice-box-categories">
         <i class="am-icon-exclamation-circle"></i>
         <span> 博客分类不能为空</span>
     </div>
@@ -166,9 +171,9 @@
         <i class="am-icon-exclamation-circle"></i>
         <span> 原作者不能为空</span>
     </div>
-    <div class="notice-box notice-box-url">
+    <div id="hint-coverImgUrl-no" class="notice-box notice-box-url">
         <i class="am-icon-exclamation-circle"></i>
-        <span> 原文链接不能为空</span>
+        <span> 封面图片链接不能为空</span>
     </div>
 </div>
 
@@ -204,22 +209,6 @@
         */
     });
 </script>
-<script type="text/javascript">
-    //弹出隐藏层
-    function ShowDiv(show_div, bg_div) {
-        document.getElementById(show_div).style.display = 'block';
-        document.getElementById(bg_div).style.display = 'block';
-        var bgdiv = document.getElementById(bg_div);
-        bgdiv.style.width = document.body.scrollWidth;
-        // bgdiv.style.height = $(document).height();
-        $("#" + bg_div).height($(document).height());
-    };
 
-    //关闭弹出层
-    function CloseDiv(show_div, bg_div) {
-        document.getElementById(show_div).style.display = 'none';
-        document.getElementById(bg_div).style.display = 'none';
-    };
-</script>
 </body>
 </html>
