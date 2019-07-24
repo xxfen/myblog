@@ -1,18 +1,18 @@
 package com.xxfen.myblog.controller;
 
-import com.xxfen.myblog.model.Article;
+import com.xxfen.myblog.model.CategoriesPageModel;
+import com.xxfen.myblog.model.PageModel;
+import com.xxfen.myblog.model.RspModel;
+import com.xxfen.myblog.model.db.Article;
 import com.xxfen.myblog.service.ArticleService;
-import com.xxfen.myblog.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
 
 
 //@MyController
@@ -38,7 +38,7 @@ public class ArticleController {
 //    public JSONObject publishArticle(Article article) {
     public String publishArticle(@RequestBody Article article) {
 
-        JSONObject returnJson = new JSONObject();
+        JSONObject json = new JSONObject();
         logger.info(article.toString() + "-0001");
         String str = "{\n" +
                 "\t\"articleTitle\": " + article.getArticleTitle() + ",\n" +
@@ -62,17 +62,16 @@ public class ArticleController {
     /**
      * 分页获得当前页文章
      *
-     * @param rows       一页的大小
-     * @param pageNum    当前页
-     * @param categories 类别
+     * @param  pageModel rows   一页的大小 pageNum  当前页 categories 类别
+     * @param
      */
     @PostMapping("/myArticles")
      @ResponseBody
-    public   JSONArray myArticles(@RequestParam(value = "rows", required = false) String rows,
-                         @RequestParam(value = "pageNum", required = false) String pageNum,
-                         @RequestParam(value = "categories", required = false) String categories) {
-        logger.info(rows + "-" + pageNum + "-" + categories);
-        return articleService.findAllArticles(rows, pageNum, categories);
+    public RspModel<List<Article>> myArticles(@RequestBody CategoriesPageModel pageModel) {
+        logger.info(pageModel.getRows() + "-" + pageModel.getPageNum() + "-" + pageModel.getCategories());
+        List<Article> allArticles = articleService.findAllArticles(pageModel.getRows(), pageModel.getPageNum(), pageModel.getCategories());
+        logger.info(allArticles.toString());
+        return RspModel.bundleOk(allArticles) ;
 
     }
 

@@ -189,7 +189,9 @@ body{font: 14px 宋体 Helvetica Neue,Helvetica,PingFang SC,Tahoma,Arial,sans-se
   .header .nav{left: 150px;}
   .header .nav a{margin: 0 20px;}
   .content .cont .title{padding-left:10px;}
-  .content .cont .list-item .item .img{padding:0 10px;}
+  .content .cont .list-item .item .img{padding:0 10px;
+    /*width: 420px;height: 280px;*/
+  }
   .content .cont .list-item .item .item-cont{padding:0 20px;}
   .content .cont .list-item .item .item-cont h3{margin:15px 0; font-size: 22px;}
   .content .cont .list-item .item .item-cont h5{margin-bottom: 10px;}

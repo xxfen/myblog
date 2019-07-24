@@ -2,7 +2,7 @@ package com.xxfen.myblog.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.xxfen.myblog.mapper.ArticleMapper;
-import com.xxfen.myblog.model.Article;
+import com.xxfen.myblog.model.db.Article;
 import com.xxfen.myblog.service.ArticleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -39,11 +41,19 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public JSONArray findAllArticles(String rows, String pageNo, String categories) {
+    public List<Article> findAllArticles(String rows, String pageNo, String categories) {
         int pageNum = Integer.parseInt(pageNo);
         int pageSize = Integer.parseInt(rows);
         PageHelper.startPage(pageNum, pageSize);
-        articleMapper.findArticleByCategories(categories);
-        return null;
+        List<Article> articles = articleMapper.findArticleByCategories(categories);
+        for (Article article :
+                articles) {
+            logger.info("article=" + article.toString());
+
+        }
+
+        logger.info("size=" + articles.size());
+        logger.info("ye=" + articles.toString());
+        return articles;
     }
 }

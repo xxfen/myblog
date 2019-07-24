@@ -1,4 +1,4 @@
-package com.xxfen.myblog.model;
+package com.xxfen.myblog.model.db;
 
 
 

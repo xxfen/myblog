@@ -1,9 +1,7 @@
 package com.xxfen.myblog.mapper;
 
-import com.xxfen.myblog.model.Article;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.xxfen.myblog.model.db.Article;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,8 +9,13 @@ import java.util.List;
 @Mapper
 //@Repository
 public interface ArticleMapper {
-
-    @Select("select id from article where articleId=#{id}")
+    /*@Results({
+            @Result(column = "id",property = "id"),
+            @Result(column = "articleId",property = "articleId"),
+            @Result(column = "articleContent",property = "articleContent"),
+            @Result(column = "articleCategories",property = "articleCategories")
+    })*/
+    @Select("select * from article where articleId=#{id}")
     Article selectArticle(long id);
 
 
@@ -22,8 +25,8 @@ public interface ArticleMapper {
      * @param categories
      * @return
      */
-    @Select("select id from article where articleCategories=#{categories}")
-    List<Article> findArticleByCategories(String categories);
+    @Select("select * from article where articleCategories=#{categories}")
+    List<Article> findArticleByCategories(@Param("categories")String categories);
 
     /**
      * 通过标签查找
@@ -31,15 +34,15 @@ public interface ArticleMapper {
      * @param tags
      * @return
      */
-    @Select("select id from article where articleTags=#{tags}")
+    @Select("select * from article where articleTags=#{tags}")
     List<Article> findArticleByTags(long tags);
 
 
-    @Insert("insert into article(articleId,author,imgPath,articleTitle,publishDate,updateDate,articleContent,articleTags,articleCategories,articleUrl,articleTabloid,likes,lastArticleId,nextArticleId) " +
+    @Insert("insert into article(articleId,author,imgPath,articleTitle,publishDate,updateDate,articleContent,articleTags,articleCategories,articleUrl,articleTabloid,likes) " +
             "values(#{articleId},#{author},#{imgPath}," +
             "#{articleTitle},#{publishDate},#{updateDate}," +
             "#{articleContent},#{articleTags}," +
             "#{articleCategories},#{articleUrl},#{articleTabloid}," +
-            "#{likes},#{lastArticleId},#{nextArticleId})")
+            "#{likes})")
     void insertArticle(Article article);
 }

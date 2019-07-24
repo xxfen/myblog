@@ -1,6 +1,6 @@
 package com.xxfen.myblog.controller;
 
-import com.xxfen.myblog.model.User;
+import com.xxfen.myblog.model.db.User;
 import com.xxfen.myblog.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

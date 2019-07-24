@@ -1,5 +1,7 @@
-package com.xxfen.myblog.model;
+package com.xxfen.myblog.model.db;
 
+
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 
@@ -8,7 +10,8 @@ import java.io.Serializable;
  * @Date: 2018/6/20 15:34
  * Describe: 文章
  */
-public class Article{
+
+public class Article {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +23,6 @@ public class Article{
     private long articleId;
 
     /**
-
      * 文章作者
      */
     private String author;
@@ -67,22 +69,22 @@ public class Article{
      * 转载：则是转载的链接
      * 原创：则是在本博客中的链接
      */
-    private String articleUrl;
+//    private String articleUrl;
 
     /**
      * 文章摘要
      */
     private String articleTabloid;
 
-    /**
+    /*    *//**
      * 上一篇文章id
-     */
+     *//*
     private long lastArticleId;
 
-    /**
+    *//**
      * 下一篇文章id
-     */
-    private long nextArticleId;
+     *//*
+    private long nextArticleId;*/
 
     /**
      * 喜欢
@@ -174,13 +176,6 @@ public class Article{
         this.articleCategories = articleCategories;
     }
 
-    public String getArticleUrl() {
-        return articleUrl;
-    }
-
-    public void setArticleUrl(String articleUrl) {
-        this.articleUrl = articleUrl;
-    }
 
     public String getArticleTabloid() {
         return articleTabloid;
@@ -190,21 +185,6 @@ public class Article{
         this.articleTabloid = articleTabloid;
     }
 
-    public long getLastArticleId() {
-        return lastArticleId;
-    }
-
-    public void setLastArticleId(long lastArticleId) {
-        this.lastArticleId = lastArticleId;
-    }
-
-    public long getNextArticleId() {
-        return nextArticleId;
-    }
-
-    public void setNextArticleId(long nextArticleId) {
-        this.nextArticleId = nextArticleId;
-    }
 
     public int getLikes() {
         return likes;
@@ -227,10 +207,9 @@ public class Article{
                 ", articleContent='" + articleContent + '\'' +
                 ", articleTags='" + articleTags + '\'' +
                 ", articleCategories='" + articleCategories + '\'' +
-                ", articleUrl='" + articleUrl + '\'' +
+               // ", articleUrl='" + articleUrl + '\'' +
                 ", articleTabloid='" + articleTabloid + '\'' +
-                ", lastArticleId=" + lastArticleId +
-                ", nextArticleId=" + nextArticleId +
+
                 ", likes=" + likes +
                 '}';
     }

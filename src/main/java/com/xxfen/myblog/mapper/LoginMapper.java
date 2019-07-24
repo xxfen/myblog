@@ -1,7 +1,6 @@
 package com.xxfen.myblog.mapper;
 
-import com.xxfen.myblog.model.Article;
-import com.xxfen.myblog.model.User;
+import com.xxfen.myblog.model.db.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
