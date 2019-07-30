@@ -4,6 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.sql.DataSource;
@@ -11,9 +13,15 @@ import javax.sql.DataSource;
 
 //@MapperScan("com.xxfen.myblog.mapper")
 @SpringBootApplication
-public class MyblogApplication {
+public class MyblogApplication extends SpringBootServletInitializer {
+
     @Autowired
     DataSource dataSource;
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(MyblogApplication.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MyblogApplication.class, args);

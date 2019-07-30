@@ -31,6 +31,11 @@ public class RspModel<T> {
         this.msg = "ok";
     }
 
+    public RspModel(int code) {
+        this.code = code;
+        this.msg = "ok";
+    }
+
     public RspModel(T result) {
         this();
         this.result = result;
@@ -52,5 +57,13 @@ public class RspModel<T> {
 
     public static <T> RspModel<T> bundleOk(T result) {
         return new RspModel<>(result);
+    }
+
+    public static <T> RspModel<T> bundleError(int code) {
+        return new RspModel<>(code);
+    }
+
+    public static <T> RspModel<T> bundleErrorNoData(int code) {
+        return new RspModel<>(code);
     }
 }

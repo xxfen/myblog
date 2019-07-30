@@ -3,7 +3,8 @@ function publishArticle() {
     // var articleContent = $('#my-editormd-html-code').val();
     // var articleContent = $('#my-editormd-markdown-doc').val();
     // var articleContent = $('.my-editormd-html-code').val();
-    var articleContent = testEditor.getMarkdown();
+    var articleContent = testEditor.getHTML();
+   /* var articleContent = testEditor.getMarkdown();*/
     var tags = $('#tagsinputval').val();
     var categories = document.getElementById("select-categories").value;
     var imgUrl = document.getElementById("articleImgUrl").value;
@@ -51,7 +52,7 @@ function publishArticle() {
             "articleCategories": categories
         }),
         success: function (data) {
-            console.log("data is :" + data);
+            console.log("data is :" + data.code);
         },
         error: function (jqXHR) {
 

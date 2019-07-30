@@ -22,9 +22,9 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public JSONObject insertArticle(Article article) {
+    public void insertArticle(Article article) {
         articleMapper.insertArticle(article);
-        return null;
+
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticleByArticleId(long articleId) {
+    public Article getArticleByArticleId(int articleId) {
         logger.info(articleId + "-001");
         Article a = articleMapper.selectArticle(articleId);
         logger.info(a + "-001");
@@ -45,7 +45,13 @@ public class ArticleServiceImpl implements ArticleService {
         int pageNum = Integer.parseInt(pageNo);
         int pageSize = Integer.parseInt(rows);
         PageHelper.startPage(pageNum, pageSize);
-        List<Article> articles = articleMapper.findArticleByCategories(categories);
+        List<Article> articles;
+        if (categories.equals("全部")) {
+            articles = articleMapper.queryArticles();
+        } else {
+            articles = articleMapper.findArticleByCategories(categories);
+        }
+
         for (Article article :
                 articles) {
             logger.info("article=" + article.toString());

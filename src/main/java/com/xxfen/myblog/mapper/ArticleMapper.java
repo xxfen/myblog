@@ -15,8 +15,8 @@ public interface ArticleMapper {
             @Result(column = "articleContent",property = "articleContent"),
             @Result(column = "articleCategories",property = "articleCategories")
     })*/
-    @Select("select * from article where articleId=#{id}")
-    Article selectArticle(long id);
+    @Select("select * from article where id=#{id}")
+    Article selectArticle(int id);
 
 
     /**
@@ -28,6 +28,9 @@ public interface ArticleMapper {
     @Select("select * from article where articleCategories=#{categories}")
     List<Article> findArticleByCategories(@Param("categories")String categories);
 
+    @Select("select * from article")
+    List<Article> queryArticles();
+
     /**
      * 通过标签查找
      *
@@ -38,11 +41,11 @@ public interface ArticleMapper {
     List<Article> findArticleByTags(long tags);
 
 
-    @Insert("insert into article(articleId,author,imgPath,articleTitle,publishDate,updateDate,articleContent,articleTags,articleCategories,articleUrl,articleTabloid,likes) " +
-            "values(#{articleId},#{author},#{imgPath}," +
+    @Insert("insert into article(articleId,imgPath,articleTitle,publishDate,updateDate,articleContent,articleTags,articleCategories,articleTabloid)" +
+            "values(#{articleId},#{imgPath}," +
             "#{articleTitle},#{publishDate},#{updateDate}," +
             "#{articleContent},#{articleTags}," +
-            "#{articleCategories},#{articleUrl},#{articleTabloid}," +
-            "#{likes})")
+            "#{articleCategories},#{articleTabloid}" +
+            ")")
     void insertArticle(Article article);
 }

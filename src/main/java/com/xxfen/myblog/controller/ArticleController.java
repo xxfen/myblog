@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,21 +26,21 @@ public class ArticleController {
     private ArticleService articleService;
 
     @RequestMapping("/{id}")
-    public String selectUser(@PathVariable long id) {
+    public RspModel<Article> selectUser(@PathVariable int id) {
         logger.info(id + "-000");
         Article articleByArticleId = articleService.getArticleByArticleId(id);
         if (articleByArticleId != null)
-            return articleByArticleId.toString();
-        else return "无数据！";
+            return RspModel.bundleOk(articleByArticleId);
+        else return RspModel.bundleError(1);
 
     }
 
     @PostMapping("/publishArticle")
     @ResponseBody
 //    public JSONObject publishArticle(Article article) {
-    public String publishArticle(@RequestBody Article article) {
+    public RspModel publishArticle(@RequestBody Article article) {
 
-        JSONObject json = new JSONObject();
+        //  JSONObject json = new JSONObject();
         logger.info(article.toString() + "-0001");
         String str = "{\n" +
                 "\t\"articleTitle\": " + article.getArticleTitle() + ",\n" +
@@ -51,8 +53,12 @@ public class ArticleController {
                 "\t\"imgPath\": " + article.getImgPath() +
                 "\n" +
                 "}";
-
-        return str;
+        article.setArticleTabloid(article.getArticleContent());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String dateStr = df.format(new Date());// new Date()为获取当前系统时间        article.setPublishDate(new Date.);
+        article.setPublishDate(dateStr);
+        articleService.insertArticle(article);
+        return RspModel.bundleOk();
         //return article.toString();
         // return   returnJson = articleService.insertArticle(article);
 
@@ -62,16 +68,16 @@ public class ArticleController {
     /**
      * 分页获得当前页文章
      *
-     * @param  pageModel rows   一页的大小 pageNum  当前页 categories 类别
+     * @param pageModel rows   一页的大小 pageNum  当前页 categories 类别
      * @param
      */
     @PostMapping("/myArticles")
-     @ResponseBody
+    @ResponseBody
     public RspModel<List<Article>> myArticles(@RequestBody CategoriesPageModel pageModel) {
         logger.info(pageModel.getRows() + "-" + pageModel.getPageNum() + "-" + pageModel.getCategories());
         List<Article> allArticles = articleService.findAllArticles(pageModel.getRows(), pageModel.getPageNum(), pageModel.getCategories());
         logger.info(allArticles.toString());
-        return RspModel.bundleOk(allArticles) ;
+        return RspModel.bundleOk(allArticles);
 
     }
 

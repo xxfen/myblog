@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../static/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <script src="/static/js/jquery.min.js"></script>
     <!--加载meta IE兼容文件-->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -64,13 +65,13 @@
                 <div class="review-version">
                     <div class="form-box">
                         <div class="article-cont">
-                            <div class="title">
+                            <div class="title" id="details_title">
                                 <h3>爷爷买街边小吃已经30多年</h3>
                                 <p class="cont-info"><span class="data">2018/08/08</span><span class="types">散文札记</span>
                                 </p>
                             </div>
                             <div id="doc-content">
-                                <textarea style="display:none;">${message.detail }</textarea>
+
                             </div>
 
                             <div class="btn-box">
@@ -201,9 +202,9 @@
     })
 </script>
 <script type="text/javascript">
-    var testEditor;
+    var articleEditor;
     $(function () {
-        testEditor = editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
+        articleEditor = editormd.markdownToHTML("doc-content", {//注意：这里是上面DIV的id
             htmlDecode: "style,script,iframe",
             emoji: true,
             taskList: true,
@@ -213,5 +214,6 @@
             codeFold: true
         });});
 </script>
+<script type="text/javascript" src="/static/js/article/show.js"></script>
 </body>
 </html>

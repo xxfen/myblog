@@ -16,14 +16,16 @@ import java.util.List;
 public interface ArticleService {
     /**
      * 保存文章
+     *
      * @param article 文章
-     * @return  status: 200--成功   500--失败
+     * @return status: 200--成功   500--失败
      */
 
-    JSONObject insertArticle(Article article);
+    void insertArticle(Article article);
 
     /**
      * 修改文章
+     *
      * @return
      */
     @Transactional
@@ -31,16 +33,19 @@ public interface ArticleService {
 
     /**
      * 获得文章
+     *
      * @param articleId 文章id
      * @return
      */
-    Article getArticleByArticleId(long articleId);
+    Article getArticleByArticleId(int articleId);
 
 
     /**
      * 按分类并分页获得所有文章
-     * @param rows 一页显示文章数
+     *
+     * @param rows   一页显示文章数
      * @param pageNo 第几页
      * @return 该页所有文章
      */
-    List<Article> findAllArticles(String rows, String pageNo, String categories);}
+    List<Article> findAllArticles(String rows, String pageNo, String categories);
+}
